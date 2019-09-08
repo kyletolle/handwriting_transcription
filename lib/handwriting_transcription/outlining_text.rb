@@ -86,7 +86,7 @@ end
 ###
 
 def folder_path
-  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1')
+  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
 end
 
 def image_prefix
@@ -96,7 +96,7 @@ def full_image_prefix
   File.join(folder_path, image_prefix)
 end
 def image_suffix
-  '-150dpi-text.png'
+  '-300dpi-bw.png'
 end
 
 def all_images

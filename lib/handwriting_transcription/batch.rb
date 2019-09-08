@@ -11,7 +11,7 @@
 # files. We probably need to try offline large batch processing...
 
 def folder_path
-  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1')
+  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
 end
 
 def image_prefix
@@ -24,11 +24,11 @@ end
 
 def image_numbers
   # @image_numbers ||= ((1..157).to_a - [63, 64])
-  @image_numbers ||= (1..13).to_a
+  @image_numbers ||= (14..15).to_a
 end
 def image_suffix
   # '.jpg'
-  '-150dpi-text.png'
+  '-300dpi-bw.png'
 end
 def image_paths
   image_numbers.map {|i| "#{full_image_prefix}#{i}#{image_suffix}" }
@@ -43,7 +43,7 @@ def project_id
 end
 def bucket_name
   # 'iomesel-journal'
-  'bones-of-a-broken-world-draft-1'
+  'bones-of-a-broken-world-draft-1-batch-3'
 end
 def location
   'us-west2'
