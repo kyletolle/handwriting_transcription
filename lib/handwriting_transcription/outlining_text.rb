@@ -85,22 +85,36 @@ end
 
 ###
 
+def folder_path
+  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1')
+end
+
+def image_prefix
+  'bones-of-a-broken-world-draft-1-page-'
+end
+def full_image_prefix
+  File.join(folder_path, image_prefix)
+end
+def image_suffix
+  '-150dpi-text.png'
+end
+
 def all_images
   # For all images:
   image_text_files = Dir
-    .children(Dir.pwd)
+    .children(folder_path)
     .select do |path|
       path.start_with?('output-')
     end
     .sort
       # .tap{|fs| puts fs }
   image_text_data = image_text_files.map do |path|
-    File.read(path)
+    File.read(File.join(folder_path, path))
   end
   image_jsons = image_text_data.map do |json_string|
     JSON.parse(json_string)
   end
-  page_regex = /page(\d+)\.jpg/
+  page_regex = /#{image_prefix}(\d+)#{image_suffix}/
   ordered_image_jsons = image_jsons.sort do |a, b|
     a_uri = a['responses'].first['context']['uri']
     b_uri = b['responses'].first['context']['uri']
@@ -119,7 +133,7 @@ def all_images
     page_number = uri.match(page_regex)[1].to_i
     # puts "Processing page number #{page_number}"
 
-    input_image_path = "/Users/kyle/Dropbox/code/kyletolle/handwriting_transcription/page#{page_number}.jpg"
+    input_image_path = "#{full_image_prefix}#{page_number}#{image_suffix}"
     # puts "File.exist?(#{input_image_path}): #{File.exist?(input_image_path)}"
     image = Magick::Image.read(input_image_path)[0]
     # json_path ="/Users/kyle/Dropbox/code/kyletolle/handwriting_transcription/output-#{page_number}-to-#{page_number}.json"
@@ -216,10 +230,18 @@ def all_images
     end
     # After exploring this, I'm confident that missing vertices should be
     # treated as 0s
-    output_image_path = "/Users/kyle/Dropbox/code/kyletolle/handwriting_transcription/page#{page_number}.symbol_confidence.jpg"
+    altered_image_suffix = image_suffix
+      .split('.')
+      .insert(1, 'symbol_confidence')
+      .join('.')
+    output_image_path = "#{full_image_prefix}#{page_number}#{altered_image_suffix}"
     # output_image_path = "/Users/kyle/Dropbox/code/kyletolle/handwriting_transcription/page#{page_number}.symbol_confidence.missingvertices.jpg"
     image.write(output_image_path)
   end
+  puts "Finished drawing on images..."
 end
 
-all_images
+# TODO: Steps to run...
+# irb
+# require './lib/handwriting_transcription/outlining_text'
+# all_images
