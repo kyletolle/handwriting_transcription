@@ -10,17 +10,28 @@
 # doesn't look like that'll work because it doesn't support passing in multiple
 # files. We probably need to try offline large batch processing...
 
-def image_prefix
-  'page'
+def folder_path
+  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1')
 end
+
+def image_prefix
+  # 'page'
+  'bones-of-a-broken-world-draft-1-page-'
+end
+def full_image_prefix
+  File.join(folder_path, image_prefix)
+end
+
 def image_numbers
-  @image_numbers ||= ((1..157).to_a - [63, 64])
+  # @image_numbers ||= ((1..157).to_a - [63, 64])
+  @image_numbers ||= (1..13).to_a
 end
 def image_suffix
-  '.jpg'
+  # '.jpg'
+  '-150dpi-text.png'
 end
 def image_paths
-  image_numbers.map {|i| "#{image_prefix}#{i}#{image_suffix}" }
+  image_numbers.map {|i| "#{full_image_prefix}#{i}#{image_suffix}" }
 end
 
 require "google/cloud/storage"
@@ -31,7 +42,8 @@ def project_id
   'handr-247100'
 end
 def bucket_name
-  'iomesel-journal'
+  # 'iomesel-journal'
+  'bones-of-a-broken-world-draft-1'
 end
 def location
   'us-west2'
@@ -43,7 +55,7 @@ end
 # Code at https://github.com/googleapis/google-cloud-ruby/tree/master/google-cloud-storage
 # Samples at https://github.com/GoogleCloudPlatform/ruby-docs-samples/blob/master/storage/files.rb
 def storage
-  Google::Cloud::Storage.new(
+  @storage ||= Google::Cloud::Storage.new(
     project_id: project_id,
     credentials: 'handwriting-transcription-2e1425be4478.json'
   )
@@ -51,7 +63,7 @@ end
 
 # Create bucket if it doesn't exist
 def existing_bucket
-  @existing_bucket ||= storage.buckets.first { |b| b.name == bucket_name }
+  @existing_bucket ||= storage.buckets.select { |b| b.name == bucket_name }.first
 end
 def new_bucket
   # Following docs at https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-code_samples
@@ -78,16 +90,18 @@ def upload_images
   puts "Starting image upload..."
   start_time = Time.now.to_i
   image_paths.each do |image_path|
+    puts "Attempting to upload `#{image_path}`"
+    image_base_name = File.basename(image_path)
     image_already_uploaded = existing_files
-      .find {|f| f.name == image_path }
+      .find {|f| f.name == image_base_name }
 
     if image_already_uploaded
-      puts "Image `#{image_path}` already uploaded, skipping."
+      puts "Image `#{image_base_name}` already uploaded, skipping."
       next
     end
 
-    bucket.create_file(image_path)
-      .tap{|ip| puts "Uploaded file `#{image_path}` in bucket `#{bucket_name}`" }
+    bucket.create_file(image_path, image_base_name)
+      .tap{|ip| puts "Uploaded file from `#{image_path}` to `#{image_base_name}` in bucket `#{bucket_name}`" }
   end
   .tap do
     end_time = Time.now.to_i
@@ -97,7 +111,8 @@ def upload_images
 end
 
 def files_to_work_with
-  @files_to_work_with ||= bucket.files prefix: image_prefix
+  image_prefix_basename = File.basename(full_image_prefix)
+  @files_to_work_with ||= bucket.files prefix: image_prefix_basename
 end
 
 # Following batch examples at: https://cloud.google.com/vision/docs/batch
@@ -201,8 +216,9 @@ end
 def download_vision_json
   puts "Starting download of json responses"
   start_time = Time.now.to_i
+
   image_output_files.each do |image_output_file|
-    local_path = File.join(Dir.pwd, image_output_file.name)
+    local_path = File.join(folder_path, image_output_file.name)
     puts "Wanting to download json file to `#{local_path}`"
     image_output_file.download local_path
   end
@@ -216,7 +232,7 @@ end
 
 def image_text_files
   Dir
-    .children(Dir.pwd)
+    .children(folder_path)
     .select do |path|
       path.start_with?('output-')
     end
@@ -225,7 +241,7 @@ end
 
 def image_text_data
   @image_text_data ||= image_text_files.map do |path|
-    File.read(path)
+    File.read(File.join(folder_path, path))
   end
 end
 
@@ -239,7 +255,7 @@ def ordered_image_jsons
   @ordered_image_jsons ||= image_jsons.sort do |a, b|
     a_uri = a['responses'].first['context']['uri']
     b_uri = b['responses'].first['context']['uri']
-    page_regex = /page(\d+)\.jpg/
+    page_regex = /#{image_prefix}(\d+)#{image_suffix}/
     a_num = a_uri.match(page_regex)[1].to_i
     b_num = b_uri.match(page_regex)[1].to_i
     a_num <=> b_num
@@ -288,22 +304,23 @@ PAGE
   all_text
 end
 
-def markdown_journal_file_path
-  File.join(Dir.pwd, 'journal_text.ordered.md')
+def markdown_file_path
+  File.join(folder_path, 'handwriting-transcribed-text.ordered.md')
 end
 
-def save_markdown_journal_text
-  File.open(markdown_journal_file_path, 'w') do |f|
+def save_markdown_text
+  File.open(markdown_file_path, 'w') do |f|
     f.write(combined_image_text_markdown)
   end
 end
 
-def raw_journal_file_path
-  File.join(Dir.pwd, 'journal_text.ordered.txt')
+def raw_file_path
+  File.join(folder_path, 'handwriting-transcribed-text.ordered.txt')
 end
 
-def save_raw_journal_text
-  File.open(raw_journal_file_path, 'w') do |f|
+def save_raw_text
+  File.open(raw_file_path, 'w') do |f|
+    puts "Trying to open file at `#{f}`"
     f.write(combined_image_text_raw)
   end
 end
@@ -313,10 +330,8 @@ end
 # TODO: Steps to run...
 # irb
 # require './lib/handwriting_transcription/batch'
-
 # upload_images
 # response
 # download_vision_json
-
-save_raw_journal_text
-save_markdown_journal_text
+# save_raw_text
+# save_markdown_text
