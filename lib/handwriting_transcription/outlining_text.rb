@@ -86,17 +86,20 @@ end
 ###
 
 def folder_path
-  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
+  # File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
+  File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
 end
 
 def image_prefix
-  'bones-of-a-broken-world-draft-1-page-'
+  # 'bones-of-a-broken-world-draft-1-page-'
+  'page'
 end
 def full_image_prefix
   File.join(folder_path, image_prefix)
 end
 def image_suffix
-  '-300dpi-bw.png'
+  # '-300dpi-bw.png'
+  '.jpg'
 end
 
 def all_images
@@ -241,7 +244,6 @@ def all_images
   puts "Finished drawing on images..."
 end
 
-# TODO: Steps to run...
-# irb
-# require './lib/handwriting_transcription/outlining_text'
-# all_images
+###
+
+# See the README for steps to run
