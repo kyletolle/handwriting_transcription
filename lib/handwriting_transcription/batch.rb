@@ -11,12 +11,13 @@
 # files. We probably need to try offline large batch processing...
 
 def folder_path
-  File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
+  # File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4')
+  File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
 end
 
 def image_prefix
-  # 'page'
-  'bones-of-a-broken-world-draft-1-page-'
+  'page'
+  # 'bones-of-a-broken-world-draft-1-page-'
 end
 def full_image_prefix
   File.join(folder_path, image_prefix)
@@ -24,11 +25,12 @@ end
 
 def image_numbers
   # @image_numbers ||= ((1..157).to_a - [63, 64])
-  @image_numbers ||= (14..15).to_a
+  # @image_numbers ||= (14..15).to_a
+  @image_numbers ||= (158..178).to_a
 end
 def image_suffix
-  # '.jpg'
-  '-300dpi-bw.png'
+  '.jpg'
+  # '-300dpi-bw.png'
 end
 def image_paths
   image_numbers.map {|i| "#{full_image_prefix}#{i}#{image_suffix}" }
@@ -42,8 +44,8 @@ def project_id
   'handr-247100'
 end
 def bucket_name
-  # 'iomesel-journal'
-  'bones-of-a-broken-world-draft-1-batch-3'
+  'iomesel-journal-batch-2'
+  # 'bones-of-a-broken-world-draft-1-batch-4'
 end
 def location
   'us-west2'
@@ -327,11 +329,4 @@ end
 
 ###
 
-# TODO: Steps to run...
-# irb
-# require './lib/handwriting_transcription/batch'
-# upload_images
-# response
-# download_vision_json
-# save_raw_text
-# save_markdown_text
+# See the README for steps to run
