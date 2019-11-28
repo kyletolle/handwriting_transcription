@@ -10,14 +10,28 @@
 # doesn't look like that'll work because it doesn't support passing in multiple
 # files. We probably need to try offline large batch processing...
 
+batch_config = {
+  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2'),
+  image_prefix: 'page',
+  image_numbers: (158..178).to_a,
+  image_suffix: '.jpg',
+  google_project_id: 'handr-247100',
+  bucket_name: 'iomesel-journal-batch-2',
+  bucket_location: 'us-west2',
+  bucket_storage_class: 'standard',
+  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+}
+
 def folder_path
   # File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4')
-  File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
+  # File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
+  batch_config[:folder_path]
 end
 
 def image_prefix
-  'page'
+  # 'page'
   # 'bones-of-a-broken-world-draft-1-page-'
+  batch_config[:image_prefix]
 end
 def full_image_prefix
   File.join(folder_path, image_prefix)
@@ -26,40 +40,50 @@ end
 def image_numbers
   # @image_numbers ||= ((1..157).to_a - [63, 64])
   # @image_numbers ||= (14..15).to_a
-  @image_numbers ||= (158..178).to_a
+  # @image_numbers ||= (158..178).to_a
+  batch_config[:image_numbers]
 end
 def image_suffix
-  '.jpg'
+  # '.jpg'
   # '-300dpi-bw.png'
+  batch_config[:image_suffix]
+end
+def full_image_path(number)
+  "#{full_image_prefix}#{number}#{image_suffix}"
 end
 def image_paths
-  image_numbers.map {|i| "#{full_image_prefix}#{i}#{image_suffix}" }
+  image_numbers.map do |image_number|
+    full_image_path(image_number)
+  end
 end
 
 require "google/cloud/storage"
 require "google/cloud/vision"
 require 'json'
 
-def project_id
-  'handr-247100'
+def google_project_id
+  batch_config[:google_project_id]
 end
 def bucket_name
-  'iomesel-journal-batch-2'
+  # 'iomesel-journal-batch-2'
   # 'bones-of-a-broken-world-draft-1-batch-4'
+  batch_config[:bucket_name]
 end
 def location
-  'us-west2'
+  # 'us-west2'
+  batch_config[:bucket_location]
 end
 def storage_class
-  'standard'
+  # 'standard'
+  batch_config[:bucket_storage_class]
 end
 
 # Code at https://github.com/googleapis/google-cloud-ruby/tree/master/google-cloud-storage
 # Samples at https://github.com/GoogleCloudPlatform/ruby-docs-samples/blob/master/storage/files.rb
 def storage
   @storage ||= Google::Cloud::Storage.new(
-    project_id: project_id,
-    credentials: 'handwriting-transcription-2e1425be4478.json'
+    project_id: google_project_id,
+    credentials: batch_config[:google_credentials_path]
   )
 end
 
@@ -170,7 +194,7 @@ end
 def image_annotator_client
   @image_annotator_client ||= Google::Cloud::Vision::ImageAnnotator.new(
     version: :v1,
-    credentials: 'handwriting-transcription-2e1425be4478.json'
+    credentials: batch_config[:google_credentials_path]
   )
 end
 
@@ -211,8 +235,10 @@ def gcs_output_uri
     .tap {|uri| puts "Output written to GCS with prefix: #{uri}" }
 end
 
+OUTPUT_FILE_PREFIX = 'output-'
+
 def image_output_files
-  bucket.files prefix: 'output-'
+  bucket.files prefix: OUTPUT_FILE_PREFIX
 end
 
 def download_vision_json
@@ -236,7 +262,7 @@ def image_text_files
   Dir
     .children(folder_path)
     .select do |path|
-      path.start_with?('output-')
+      path.start_with?(OUTPUT_FILE_PREFIX)
     end
       .sort
 end
@@ -306,8 +332,9 @@ PAGE
   all_text
 end
 
+ORDERED_MARKDOWN_FILE_NAME = 'handwriting-transcribed-text.ordered.md'
 def markdown_file_path
-  File.join(folder_path, 'handwriting-transcribed-text.ordered.md')
+  File.join(folder_path, ORDERED_MARKDOWN_FILE_NAME)
 end
 
 def save_markdown_text
@@ -316,8 +343,9 @@ def save_markdown_text
   end
 end
 
+ORDERED_TEXT_FILE_NAME = 'handwriting-transcribed-text.ordered.txt'
 def raw_file_path
-  File.join(folder_path, 'handwriting-transcribed-text.ordered.txt')
+  File.join(folder_path, ORDERED_TEXT_FILE_NAME)
 end
 
 def save_raw_text
