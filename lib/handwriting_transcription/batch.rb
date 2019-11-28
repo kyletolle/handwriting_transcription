@@ -37,7 +37,7 @@ IOMESEL_JOURNAL_BATCH_2_CONFIG = {
 BOABW_DRAFT_1_CONFIG = {
   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4'),
   image_prefix: 'bones-of-a-broken-world-draft-1-page-',
-  image_numbers: @image_numbers ||= (14..15).to_a,
+  image_numbers: (14..15).to_a,
   image_suffix: '-300dpi-bw.png',
   google_project_id: 'handr-247100',
   bucket_name: 'bones-of-a-broken-world-draft-1-batch-4',
