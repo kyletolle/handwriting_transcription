@@ -63,14 +63,10 @@ def batch_config
 end
 
 def folder_path
-  # File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4')
-  # File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
   batch_config[:folder_path]
 end
 
 def image_prefix
-  # 'page'
-  # 'bones-of-a-broken-world-draft-1-page-'
   batch_config[:image_prefix]
 end
 def full_image_prefix
@@ -78,14 +74,9 @@ def full_image_prefix
 end
 
 def image_numbers
-  # @image_numbers ||= ((1..157).to_a - [63, 64])
-  # @image_numbers ||= (14..15).to_a
-  # @image_numbers ||= (158..178).to_a
   batch_config[:image_numbers]
 end
 def image_suffix
-  # '.jpg'
-  # '-300dpi-bw.png'
   batch_config[:image_suffix]
 end
 def full_image_path(number)
@@ -105,8 +96,6 @@ def google_project_id
   batch_config[:google_project_id]
 end
 def bucket_name
-  # 'iomesel-journal-batch-2'
-  # 'bones-of-a-broken-world-draft-1-batch-4'
   batch_config[:bucket_name]
 end
 def location
