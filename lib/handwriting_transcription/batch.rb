@@ -10,7 +10,7 @@
 # doesn't look like that'll work because it doesn't support passing in multiple
 # files. We probably need to try offline large batch processing...
 
-batch_config = {
+iomesel_journal_config = {
   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2'),
   image_prefix: 'page',
   image_numbers: (158..178).to_a,
@@ -21,6 +21,23 @@ batch_config = {
   bucket_storage_class: 'standard',
   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
 }
+
+boabw_draft_1_config = {
+  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4'),
+  image_prefix: 'bones-of-a-broken-world-draft-1-page-',
+  image_numbers: @image_numbers ||= (14..15).to_a,
+  image_suffix: '-300dpi-bw.png',
+  google_project_id: 'handr-247100',
+  bucket_name: 'bones-of-a-broken-world-draft-1-batch-4',
+  bucket_location: 'us-west2',
+  bucket_storage_class: 'standard',
+  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+}
+
+
+def batch_config
+  iomesel_journal_config
+end
 
 def folder_path
   # File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4')
@@ -316,6 +333,7 @@ def combined_image_text_raw
   full_image_texts.each.with_index do |full_image_text, index|
     all_text += full_image_text+"\n"
   end
+
   all_text
 end
 
