@@ -10,7 +10,19 @@
 # doesn't look like that'll work because it doesn't support passing in multiple
 # files. We probably need to try offline large batch processing...
 
-iomesel_journal_config = {
+iomesel_journal_batch_1_config = {
+  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-1'),
+  image_prefix: 'page',
+  image_numbers: ((1..157).to_a - [63, 64]),
+  image_suffix: '.jpg',
+  google_project_id: 'handr-247100',
+  bucket_name: 'iomesel-journal-batch-1',
+  bucket_location: 'us-west2',
+  bucket_storage_class: 'standard',
+  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+}
+
+iomesel_journal_batch_2_config = {
   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2'),
   image_prefix: 'page',
   image_numbers: (158..178).to_a,
