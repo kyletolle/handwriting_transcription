@@ -59,7 +59,7 @@ BOABW_1_PAGE_TEST_CONFIG = {
 }
 
 def batch_config
-  iomesel_journal_config
+  BOABW_1_PAGE_TEST_CONFIG
 end
 
 def folder_path
