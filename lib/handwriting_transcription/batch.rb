@@ -46,6 +46,17 @@ BOABW_DRAFT_1_CONFIG = {
   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
 }
 
+BOABW_1_PAGE_TEST_CONFIG = {
+  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-test-1'),
+  image_prefix: 'bones-of-a-broken-world-draft-1-page-',
+  image_numbers: (1..1).to_a,
+  image_suffix: '-600dpi-bw.png',
+  google_project_id: 'handr-247100',
+  bucket_name: 'bones-of-a-broken-world-draft-1-batch-test-1',
+  bucket_location: 'us-west2',
+  bucket_storage_class: 'standard',
+  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+}
 
 def batch_config
   iomesel_journal_config
