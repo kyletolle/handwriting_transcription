@@ -10,7 +10,7 @@
 # doesn't look like that'll work because it doesn't support passing in multiple
 # files. We probably need to try offline large batch processing...
 
-iomesel_journal_batch_1_config = {
+IOMESEL_JOURNAL_BATCH_1_CONFIG = {
   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-1'),
   image_prefix: 'page',
   image_numbers: ((1..157).to_a - [63, 64]),
@@ -22,7 +22,7 @@ iomesel_journal_batch_1_config = {
   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
 }
 
-iomesel_journal_batch_2_config = {
+IOMESEL_JOURNAL_BATCH_2_CONFIG = {
   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2'),
   image_prefix: 'page',
   image_numbers: (158..178).to_a,
@@ -34,7 +34,7 @@ iomesel_journal_batch_2_config = {
   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
 }
 
-boabw_draft_1_config = {
+BOABW_DRAFT_1_CONFIG = {
   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4'),
   image_prefix: 'bones-of-a-broken-world-draft-1-page-',
   image_numbers: @image_numbers ||= (14..15).to_a,
