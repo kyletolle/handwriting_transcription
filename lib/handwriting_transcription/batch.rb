@@ -10,53 +10,53 @@
 # doesn't look like that'll work because it doesn't support passing in multiple
 # files. We probably need to try offline large batch processing...
 
-IOMESEL_JOURNAL_BATCH_1_CONFIG = {
-  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-1'),
-  image_prefix: 'page',
-  image_numbers: ((1..157).to_a - [63, 64]),
-  image_suffix: '.jpg',
-  google_project_id: 'handr-247100',
-  bucket_name: 'iomesel-journal-batch-1',
-  bucket_location: 'us-west2',
-  bucket_storage_class: 'standard',
-  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
-}
+# IOMESEL_JOURNAL_BATCH_1_CONFIG = {
+#   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-1'),
+#   image_prefix: 'page',
+#   image_numbers: ((1..157).to_a - [63, 64]),
+#   image_suffix: '.jpg',
+#   google_project_id: 'handr-247100',
+#   bucket_name: 'iomesel-journal-batch-1',
+#   bucket_location: 'us-west2',
+#   bucket_storage_class: 'standard',
+#   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+# }
 
-IOMESEL_JOURNAL_BATCH_2_CONFIG = {
-  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2'),
-  image_prefix: 'page',
-  image_numbers: (158..178).to_a,
-  image_suffix: '.jpg',
-  google_project_id: 'handr-247100',
-  bucket_name: 'iomesel-journal-batch-2',
-  bucket_location: 'us-west2',
-  bucket_storage_class: 'standard',
-  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
-}
+# IOMESEL_JOURNAL_BATCH_2_CONFIG = {
+#   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2'),
+#   image_prefix: 'page',
+#   image_numbers: (158..178).to_a,
+#   image_suffix: '.jpg',
+#   google_project_id: 'handr-247100',
+#   bucket_name: 'iomesel-journal-batch-2',
+#   bucket_location: 'us-west2',
+#   bucket_storage_class: 'standard',
+#   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+# }
 
-BOABW_DRAFT_1_CONFIG = {
-  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4'),
-  image_prefix: 'bones-of-a-broken-world-draft-1-page-',
-  image_numbers: (14..15).to_a,
-  image_suffix: '-300dpi-bw.png',
-  google_project_id: 'handr-247100',
-  bucket_name: 'bones-of-a-broken-world-draft-1-batch-4',
-  bucket_location: 'us-west2',
-  bucket_storage_class: 'standard',
-  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
-}
+# BOABW_DRAFT_1_CONFIG = {
+#   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-4'),
+#   image_prefix: 'bones-of-a-broken-world-draft-1-page-',
+#   image_numbers: (14..15).to_a,
+#   image_suffix: '-300dpi-bw.png',
+#   google_project_id: 'handr-247100',
+#   bucket_name: 'bones-of-a-broken-world-draft-1-batch-4',
+#   bucket_location: 'us-west2',
+#   bucket_storage_class: 'standard',
+#   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+# }
 
-BOABW_1_PAGE_TEST_CONFIG = {
-  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-test-1'),
-  image_prefix: 'bones-of-a-broken-world-draft-1-page-',
-  image_numbers: (1..1).to_a,
-  image_suffix: '-600dpi-bw.png',
-  google_project_id: 'handr-247100',
-  bucket_name: 'bones-of-a-broken-world-draft-1-batch-test-1',
-  bucket_location: 'us-west2',
-  bucket_storage_class: 'standard',
-  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
-}
+# BOABW_1_PAGE_TEST_CONFIG = {
+#   folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-test-1'),
+#   image_prefix: 'bones-of-a-broken-world-draft-1-page-',
+#   image_numbers: (1..1).to_a,
+#   image_suffix: '-600dpi-bw.png',
+#   google_project_id: 'handr-247100',
+#   bucket_name: 'bones-of-a-broken-world-draft-1-batch-test-1',
+#   bucket_location: 'us-west2',
+#   bucket_storage_class: 'standard',
+#   google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+# }
 
 def batch_config
   BOABW_1_PAGE_TEST_CONFIG
