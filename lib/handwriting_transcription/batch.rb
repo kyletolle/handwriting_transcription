@@ -59,7 +59,7 @@
 # }
 
 def batch_config
-  BOABW_1_PAGE_TEST_CONFIG
+  HANDWRITING_BATCH_CONFIG
 end
 
 def folder_path
