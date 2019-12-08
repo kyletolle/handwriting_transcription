@@ -85,22 +85,22 @@ end
 
 ###
 
-def folder_path
-  # File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
-  File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
-end
+# def folder_path
+#   # File.join('', 'Users', 'kyle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'handwriting-batch-3')
+#   File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'iomeselia', 'iomesel-journal', 'handwriting-batch-2')
+# end
 
-def image_prefix
-  # 'bones-of-a-broken-world-draft-1-page-'
-  'page'
-end
-def full_image_prefix
-  File.join(folder_path, image_prefix)
-end
-def image_suffix
-  # '-300dpi-bw.png'
-  '.jpg'
-end
+# def image_prefix
+#   # 'bones-of-a-broken-world-draft-1-page-'
+#   'page'
+# end
+# def full_image_prefix
+#   File.join(folder_path, image_prefix)
+# end
+# def image_suffix
+#   # '-300dpi-bw.png'
+#   '.jpg'
+# end
 
 def all_images
   # For all images:
@@ -136,7 +136,7 @@ def all_images
     page_number = uri.match(page_regex)[1].to_i
     # puts "Processing page number #{page_number}"
 
-    input_image_path = "#{full_image_prefix}#{page_number}#{image_suffix}"
+    input_image_path = full_image_path(page_number)
     # puts "File.exist?(#{input_image_path}): #{File.exist?(input_image_path)}"
     image = Magick::Image.read(input_image_path)[0]
     # json_path ="/Users/kyle/Dropbox/code/kyletolle/handwriting_transcription/output-#{page_number}-to-#{page_number}.json"
@@ -243,7 +243,3 @@ def all_images
   end
   puts "Finished drawing on images..."
 end
-
-###
-
-# See the README for steps to run
