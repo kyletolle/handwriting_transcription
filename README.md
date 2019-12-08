@@ -1,6 +1,7 @@
 # handwriting-transcription
 
-```
+Convert images that contain handwritten text and convert them to digital text.
+
 # Information
 
 ## Before you begin
@@ -8,6 +9,57 @@ https://cloud.google.com/vision/docs/before-you-begin
 
 ## Gem library
 https://cloud.google.com/vision/docs/quickstart-client-libraries
+
+# Transcription and Outlining
+
+## Installing
+
+These are the install steps for both the batch.rb and outlining_text.rb.
+
+```
+rbenv shell 2.6.5
+gem install google-cloud-storage
+gem install google-cloud-vision
+export GOOGLE_APPLICATION_CREDENTIAL='handwriting-transcription-2e1425be4478.json' # Is this really needed?
+brew install imagemagick@6
+rbenv shell 2.6.5
+LDFLAGS=-L/usr/local/opt/imagemagick@6/lib \
+CPPFLAGS=-I/usr/local/opt/imagemagick@6/include \
+PKG_CONFIG_PATH=/usr/local/opt/imagemagick@6/lib/pkgconfig \
+gem install rmagick
+```
+
+## Creating Config File
+
+In the path of where you have the batch of images to do handwriting transcription on, create a file named something like `config.rb` that has the following hash keys and values applicable to your batch.
+
+```
+HANDWRITING_BATCH_CONFIG = {
+  folder_path: File.join('', 'Users', 'kyletolle', 'Dropbox', 'everything', 'novels', 'bones-of-a-broken-world', 'draft-1', 'ch2-batch-2'),
+  image_prefix: 'page',
+  image_numbers: (8..14).to_a,
+  image_suffix: '.jpeg',
+  google_project_id: 'handr-247100',
+  bucket_name: 'bones-of-a-broken-world-draft-1-ch2-batch-2',
+  bucket_location: 'us-west2',
+  bucket_storage_class: 'standard',
+  google_credentials_path: 'handwriting-transcription-2e1425be4478.json',
+}
+```
+
+## Usage
+
+From the root folder of this project, run the following command, being sure to replace the path of the config.rb to point to the one you created just above.
+
+This will take care of uploading the images to google, doing the hand writing transcription, create text files with all the text joined into a single file, and drawing boxes around the symbols detected.
+
+```
+ruby lib/handwriting_transcription/transcribe.rb /Users/kyletolle/Dropbox\ \(Personal\)/everything/novels/bones-of-a-broken-world/draft-1/ch2-batch-2/config.rb
+```
+
+---
+
+These next steps are for running portions of the project individually.
 
 # Batch Processing
 
@@ -54,7 +106,6 @@ LDFLAGS=-L/usr/local/opt/imagemagick@6/lib \
 CPPFLAGS=-I/usr/local/opt/imagemagick@6/include \
 PKG_CONFIG_PATH=/usr/local/opt/imagemagick@6/lib/pkgconfig \
 gem install rmagick
-
 ```
 
 ## Usage
