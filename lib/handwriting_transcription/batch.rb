@@ -374,17 +374,25 @@ def save_markdown_text
 end
 
 ORDERED_TEXT_FILE_NAME = 'handwriting-transcribed-text.ordered.txt'
-def raw_file_path
+def ordered_file_path
   File.join(folder_path, ORDERED_TEXT_FILE_NAME)
 end
 
-def save_raw_text
-  File.open(raw_file_path, 'w') do |f|
+def save_ordered_text_file
+  File.open(ordered_file_path, 'w') do |f|
     puts "Trying to open file at `#{f}`"
     f.write(combined_image_text_raw)
   end
 end
 
-###
+CORRECTED_TEXT_FILE_NAME = 'handwriting-transcribed-text.corrected.txt'
+def corrected_file_path
+  File.join(folder_path, CORRECTED_TEXT_FILE_NAME)
+end
 
-# See the README for steps to run
+def save_corrected_text_file
+  File.open(corrected_file_path, 'w') do |f|
+    puts "Trying to open file at `#{f}`"
+    f.write(combined_image_text_raw)
+  end
+end
